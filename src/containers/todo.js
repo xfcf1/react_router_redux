@@ -1,18 +1,24 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions/page5'
-import AddTodo from '../components/AddTodo.jsx'
-import TodoList from '../components/TodoList.jsx'
-import Footer from '../components/Footer2.jsx'
+import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions/todo'
+import AddTodo from '../containers/addTodo.jsx'
+import TodoList from '../containers/todoList.jsx'
 
 class App extends Component {
     render() {
-        const { dispatch, visibleTodos, visibilityFilter } = this.props;
+        // Injected by connect() call:
+        const { dispatch, visibleTodos, visibilityFilter } = this.props
         return (
             <div>
-                <AddTodo onAddClick={text => dispatch(addTodo(text))} />
-                <TodoList todos={visibleTodos} onTodoClick={index => dispatch(completeTodo(index)) } />
-                <Footer filter={visibilityFilter} onFilterChange={nextFilter => dispatch(setVisibilityFilter(nextFilter)) } />
+                <AddTodo
+                    onAddClick={text =>
+            dispatch(addTodo(text))
+          } />
+                <TodoList
+                    todos={visibleTodos}
+                    onTodoClick={index =>
+            dispatch(completeTodo(index))
+          } />
             </div>
         )
     }

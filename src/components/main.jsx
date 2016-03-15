@@ -1,20 +1,25 @@
 import React from 'react';
-import {RouteHandler, Link} from 'react-router';
-import cookie from 'react-cookie';
+import Header from './common/header.jsx';
+import Footer from './common/footer.jsx';
+import Aside from './common/Aside.jsx';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import reducer from '../reducers/reducers'
+let store = createStore(reducer)
 
-class Main extends React.Component {
-    constructor(props){
-        super(props);
-        //if(!cookie.load('username')){
-        //    window.location.href = '/login';
-        //}
-        this.state = {}
-    }
+export default class Main extends React.Component{
     render(){
         return(
-            <div>{this.props.children}</div>
-        );
+            <div >
+                <Header/>
+                <div className="container">
+                    <Aside/>
+                    <Provider store={store}>
+                        {this.props.children}
+                    </Provider>
+                </div>
+                <Footer/>
+            </div>
+        )
     }
 }
-
-export default Main;
