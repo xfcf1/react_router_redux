@@ -15,7 +15,7 @@ class Header extends React.Component{
             username: username
         }
     }
-    logout(){
+    logout = () =>{
         actions.logout();
     }
     render(){

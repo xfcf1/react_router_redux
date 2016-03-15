@@ -6,7 +6,6 @@ var MainStore = {
 
     logout() {
         cookie.remove('username', { path: '/' });
-        window.location.hash = '/login';
     }
 }
 

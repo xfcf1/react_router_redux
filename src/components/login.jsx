@@ -14,6 +14,7 @@ class Login extends React.Component{
     }
     login = () => {
         actions.login(this.state);
+        this.props.history.pushState(null, '');
     }
     onChangeUsername = e =>{
         this.setState({username: e.target.value});

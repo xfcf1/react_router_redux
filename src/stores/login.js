@@ -18,7 +18,6 @@ var LoginStore = {
 
     login(info) {
         cookie.save('username', info.username, { path: '/' });
-        window.location.hash = '/';
     }
 }
 
