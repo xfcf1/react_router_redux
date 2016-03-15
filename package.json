@@ -1,0 +1,44 @@
+{
+  "name": "act",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "gulp clean && webpack && gulp copy && gulp injectSource && gulp zip && gulp package",
+    "watch": "webpack-dev-server --content-base src --hot --inline --progress --colors --port 3000",
+    "test": "echo \"No unit tests and e2e tests yet\" && exit 1"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^5.6.18",
+    "bootstrap": "^3.0.0",
+    "history": "^1.17.0",
+    "jquery": "^1.9.0",
+    "jquery-ui": "^1.10.5",
+    "object-assign": "^4.0.1",
+    "react": "^0.14.0",
+    "react-cookie": "^0.4.5",
+    "react-dom": "^0.14.0",
+    "react-redux": "^4.4.1",
+    "react-router": "^1.0.1",
+    "redux": "^3.3.1"
+  },
+  "devDependencies": {
+    "babel-core": "^5.6.18",
+    "babel-loader": "^5.3.1",
+    "css-loader": "^0.19.0",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-inject": "^3.0.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-uglify": "^1.5.3",
+    "gulp-zip": "^3.2.0",
+    "html-webpack-plugin": "^1.6.0",
+    "jshint": "^2.9.1",
+    "raw-loader": "^0.5.1",
+    "redux-devtools": "^3.1.1",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.10.1",
+    "webpack-dev-server": "^1.10.1"
+  }
+}
