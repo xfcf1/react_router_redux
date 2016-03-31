@@ -1,5 +1,5 @@
 {
-  "name": "act",
+  "name": "react_router_redux_demo",
   "version": "0.0.1",
   "scripts": {
     "build": "gulp clean && webpack && gulp copy && gulp injectSource && gulp zip && gulp package",
