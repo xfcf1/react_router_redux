@@ -3,12 +3,21 @@ var webpack = require('webpack'),
     path = require('path'),
     srcPath = path.join(__dirname, 'src');
 
+var common = [
+    'react',
+    'react-dom',
+    'react-router',
+    'redux',
+    'react-redux',
+    'react-cookie',
+]
+
 module.exports = {
     target: 'web',
     cache: true,
     entry: {
         module: path.join(srcPath, 'module.js'),
-        common: ['react', 'react-router', 'flux']
+        common: common
     },
     resolve: {
         root: srcPath,
@@ -25,12 +34,17 @@ module.exports = {
 
     module: {
         loaders: [
-            {test: /\.js?$/,loader: 'babel?cacheDirectory&stage=0', exclude: /node_modules/},
-            {test: /\.jsx?$/, loader: 'babel?stage=0', exclude: /node_modules/},
-            {test: /\.html$/, loader: 'raw', exclude: /node_modules/},
-            {test: /(?!\.html)\.jade$/, loader: 'jade-loader', exclude: /node_modules/},
-            {test: /\.css$/, loader: 'style-loader!css-loader', exclude: /node_modules/},
-            {test: /\.less$/, loader: 'style-loader!css-loader!less-loader', exclude: /node_modules/}
+            {test: /\.(jsx|js)$/, loader: 'babel-loader', exclude: /ztree/, query: {
+                cacheDirectory: true,
+                presets: ['es2015', 'react', 'stage-0']
+            }},
+            {test: /\.html$/, loader: 'raw'},
+            {test: /(?!\.html)\.jade$/, loader: 'jade-loader'},
+            {test: /\.(css|less)$/, loader: 'style-loader!css-loader!postcss-loader!less-loader'},
+            {test: /\.(ttf|eot|woff|woff2|otf|svg)/, loader: 'file-loader?name=./font/[name].[ext]'},
+            {test: /\.json$/, loader: 'file-loader?name=./json/[name].json'},
+            {test: /\.(png|jpg|jpeg|gif)$/, loader: 'url-loader?limit=10000&name=./images/[name].[ext]'},
+            {test: /jquery\.js$/, loader: 'expose?jQuery'}
         ]
     },
     plugins: [
@@ -43,7 +57,7 @@ module.exports = {
     ],
 
     debug: true,
-    devtool: 'eval-cheap-module-source-map',
+    devtool: 'false',
     devServer: {
         contentBase: './dist',
         proxy: {

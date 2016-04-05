@@ -7,39 +7,53 @@ var uglify = require('gulp-uglify');
 var zip = require('gulp-zip');
 var del = require('del');
 var inject = require('gulp-inject');
-//var gulpSequence = require('gulp-sequence');
+var rev = require('gulp-rev');
+var runSequence = require('run-sequence');
 
 gulp.task('clean', function() {
-    del.sync([path.join('./dist/**')]);
+    return del.sync([path.join('./dist/**')]);
 });
 gulp.task('copy', function() {
-    gulp.src('./src/index.html')
+    return gulp.src(['./src/@(images|fonts|css)/**', './src/index.html'])
         .pipe(gulp.dest('dist'))
-    gulp.src('./src/@(images|css)/**')
-        .pipe(gulp.dest('dist'))
-    gulp.src('./src/js/**')
-        .pipe(gulp.dest('dist/js'))
 });
 gulp.task('injectSource', function () {
     var target = gulp.src('./dist/index.html');
-    var sources = gulp.src('./dist/**/*.js', {read: false});
+    var sources = gulp.src(['./dist/**/*.js', './dist/**/*.css'], {read: false});
 
-    target.pipe(inject(sources, {relative:true}))
+    return target.pipe(inject(sources, {relative:true}))
         .pipe(gulp.dest('./dist'));
 });
+gulp.task('rev', function () {
+    return gulp.src(['./dist/**/*.js','./dist/**/*.css'])
+        .pipe(rev())
+        .pipe(gulp.dest('dist'))
+});
+gulp.task('delete', function () {
+    return del.sync([
+        path.join('./dist/**/*.js'),
+        path.join('./dist/**/*.css'),
+        '!'+path.join('./dist/**/*-*.js'),
+        '!'+path.join('./dist/**/*-*.css')
+    ]);
+});
 gulp.task('zip', function() {
-    gulp.src('./dist/*.js')
+    return gulp.src('./dist/*.js')
         .pipe(uglify())
         .pipe(gulp.dest('dist'))
-    //gulp.src('./dist/**/*.css')
-    //    .pipe(concat('style.css'))
-    //    .pipe(gulp.dest('dist/styles'))
-    gulp.src('./dist/**/*.css')
+});
+gulp.task('zip2', function() {
+    return gulp.src('./dist/**/*.css')
         .pipe(minifyCss())
         .pipe(gulp.dest('dist'))
 });
 gulp.task('package', function() {
-    gulp.src('./dist/**')
+    return gulp.src('./dist/**')
         .pipe(zip('app.zip'))
         .pipe(gulp.dest('dist'));
+});
+
+
+gulp.task('build', function() {
+    runSequence('copy', 'rev', 'delete', 'injectSource', ['zip', 'zip2'] , 'package');
 });
