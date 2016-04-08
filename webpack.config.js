@@ -34,7 +34,7 @@ module.exports = {
 
     module: {
         loaders: [
-            {test: /\.(jsx|js)$/, loader: 'babel-loader', exclude: /ztree/, query: {
+            {test: /\.(jsx|js)$/, loader: 'babel-loader', query: {
                 cacheDirectory: true,
                 presets: ['es2015', 'react', 'stage-0']
             }},
