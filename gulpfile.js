@@ -1,7 +1,7 @@
 var path = require('path');
 var gulp = require('gulp');
 var concat = require('gulp-concat');
-var minifyCss = require('gulp-minify-css');
+var cleanCss = require('gulp-clean-css');
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var zip = require('gulp-zip');
@@ -44,7 +44,7 @@ gulp.task('zip', function() {
 });
 gulp.task('zip2', function() {
     return gulp.src('./dist/**/*.css')
-        .pipe(minifyCss())
+        .pipe(cleanCss({compatibility: 'ie8'}))
         .pipe(gulp.dest('dist'))
 });
 gulp.task('package', function() {
